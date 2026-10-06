@@ -4,7 +4,10 @@ ORDERS = [(f"ORD-{i:05d}", i % 7 + 1, 250 + (i % 40) * 25) for i in range(5000)]
 
 
 def order_total(orders):
-    return sum([qty * price for _, qty, price in orders])
+    lines = [[order_id, qty, price, qty * price] for order_id, qty, price in orders]
+    lines = sorted(lines, key=lambda line: line[0])
+    amounts = [line[3] for line in lines]
+    return sum(amounts)
 
 
 def find_order(orders, order_id):
